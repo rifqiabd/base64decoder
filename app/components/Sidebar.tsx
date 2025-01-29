@@ -17,6 +17,7 @@ import {
 const menuItems = [
   { icon: Home, name: "Home", href: "/" },
   { icon: Image, name: "Base64 Image Decoder", href: "/base64-decoder" },
+  { icon: FileText, name: "Help", href: "/help" },
 ]
 
 export function AppSidebar() {
@@ -26,8 +27,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-5 bg-primary">
         <h1 className="text-2xl font-bold text-white">
-          <span className="group-data-[collapsible=icon]:hidden">Rifqi Tools</span>
-          <span className="hidden group-data-[collapsible=icon]:inline">RTools</span>
+          <span className="group-data-[collapsible=icon]:hidden">🦊 Tools</span>
         </h1>
       </SidebarHeader>
       <SidebarContent>

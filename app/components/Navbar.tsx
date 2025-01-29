@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { HelpCircle } from "lucide-react"
 
 interface NavbarProps {
   toolName: string
@@ -13,7 +14,7 @@ export function Navbar({ toolName }: NavbarProps) {
         <h1 className="text-2xl font-bold">{toolName}</h1>
       </div>
       <div>
-        <Button variant="ghost">Login</Button>
+        <Button variant="default" about="Heyy"><HelpCircle /></Button>
       </div>
     </nav>
   )
