@@ -1,38 +1,69 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { ArrowBigDownDash, FileArchive, Trash2 } from "lucide-react";
 
 interface ImageListProps {
-  images: string[]
-  onDeleteImages: (indicesToDelete: number[]) => void
-  onClearAll: () => void
+  images: string[];
+  onDeleteImages: (indicesToDelete: number[]) => void;
+  onClearAll: () => void;
 }
 
-export default function ImageList({ images, onDeleteImages, onClearAll }: ImageListProps) {
-  const [selectedImages, setSelectedImages] = useState<Set<number>>(new Set())
+export default function ImageList({
+  images,
+  onDeleteImages,
+  onClearAll,
+}: ImageListProps) {
+  const [selectedImages, setSelectedImages] = useState<Set<number>>(new Set());
 
   const toggleImageSelection = (index: number) => {
-    const newSelection = new Set(selectedImages)
+    const newSelection = new Set(selectedImages);
     if (newSelection.has(index)) {
-      newSelection.delete(index)
+      newSelection.delete(index);
     } else {
-      newSelection.add(index)
+      newSelection.add(index);
     }
-    setSelectedImages(newSelection)
-  }
+    setSelectedImages(newSelection);
+  };
 
   const downloadImage = (imageUrl: string, index: number) => {
-    const link = document.createElement("a")
-    link.href = imageUrl
-    link.download = `image_${index + 1}.jpg`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = `image_${index + 1}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleDeleteSelected = () => {
-    onDeleteImages(Array.from(selectedImages))
-    setSelectedImages(new Set())
-  }
+    onDeleteImages(Array.from(selectedImages));
+    setSelectedImages(new Set());
+  };
+
+  const downloadSelectedImages = async () => {
+    const zip = new JSZip();
+    images.forEach((image, index) => {
+      if (selectedImages.has(index)) {
+        // Extract base64 data from data URL
+        const base64Data = image.split(",")[1];
+        zip.file(`image_${index + 1}.jpg`, base64Data, { base64: true });
+      }
+    });
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, "selected_images.zip");
+  };
+
+  const downloadAllImages = async () => {
+    const zip = new JSZip();
+    images.forEach((image, index) => {
+      // Extract base64 data from data URL
+      const base64Data = image.split(",")[1];
+      zip.file(`image_${index + 1}.jpg`, base64Data, { base64: true });
+    });
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, "all_images.zip");
+  };
 
   return (
     <div>
@@ -42,14 +73,27 @@ export default function ImageList({ images, onDeleteImages, onClearAll }: ImageL
           disabled={selectedImages.size === 0}
           className="bg-red-500 hover:bg-red-600 text-white"
         >
-          Delete Selected ({selectedImages.size})
+          <Trash2 /> ({selectedImages.size})
         </Button>
+
         <Button
+          variant="destructive"
           onClick={onClearAll}
           disabled={images.length === 0}
           className="bg-gray-500 hover:bg-gray-600 text-white"
         >
           Clear All
+        </Button>
+
+        <Button
+          onClick={downloadSelectedImages}
+          disabled={selectedImages.size === 0}
+        >
+          <ArrowBigDownDash /> Selected ({selectedImages.size})
+        </Button>
+
+        <Button onClick={downloadAllImages} disabled={images.length === 0}>
+          <FileArchive /> Zip ({selectedImages.size})
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -70,10 +114,17 @@ export default function ImageList({ images, onDeleteImages, onClearAll }: ImageL
               <span className="text-sm text-gray-600">Select</span>
             </div>
             <div className="flex gap-2">
-              <Button onClick={() => downloadImage(image, index)} className="flex-1 text-sm">
+              <Button
+                onClick={() => downloadImage(image, index)}
+                className="flex-1 text-sm"
+              >
                 Download
               </Button>
-              <Button onClick={() => onDeleteImages([index])} variant="destructive" className="flex-1 text-sm">
+              <Button
+                onClick={() => onDeleteImages([index])}
+                variant="destructive"
+                className="flex-1 text-sm"
+              >
                 Delete
               </Button>
             </div>
@@ -81,6 +132,5 @@ export default function ImageList({ images, onDeleteImages, onClearAll }: ImageL
         ))}
       </div>
     </div>
-  )
+  );
 }
-

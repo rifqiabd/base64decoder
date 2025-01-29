@@ -25,8 +25,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="p-4">
-        <h1 className="text-2xl font-bold">
+      <SidebarHeader className="p-5 bg-primary">
+        <h1 className="text-2xl font-bold text-white">
           <span className="group-data-[collapsible=icon]:hidden">Rifqi Tools</span>
           <span className="hidden group-data-[collapsible=icon]:inline">RTools</span>
         </h1>
@@ -36,8 +36,8 @@ export function AppSidebar() {
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild className={cn(pathname === item.href && "bg-muted")}>
-                <Link href={item.href}>
-                  <item.icon className="mr-2 h-4 w-4" />
+                <Link href={item.href} >
+                  <item.icon className="mr-2 ml-4 h-6 w-6" />
                   <span>{item.name}</span>
                 </Link>
               </SidebarMenuButton>
