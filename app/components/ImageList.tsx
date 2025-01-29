@@ -67,7 +67,7 @@ export default function ImageList({
 
   return (
     <div>
-      <div className="flex justify-between mb-4">
+      <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
         <Button
           onClick={handleDeleteSelected}
           disabled={selectedImages.size === 0}
@@ -81,7 +81,7 @@ export default function ImageList({
           onClick={onClearAll}
           disabled={images.length === 0}
         >
-          <RotateCcw /> Star Over
+          <RotateCcw /> Start Over
         </Button>
 
         <Button
@@ -112,7 +112,7 @@ export default function ImageList({
               />
               <span className="text-sm text-gray-600">Select</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={() => downloadImage(image, index)}
                 className="flex-1 text-sm"

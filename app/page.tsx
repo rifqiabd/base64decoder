@@ -11,7 +11,7 @@ export default function Home() {
       <Navbar toolName="Home" />
       <title>Home</title>
       <div className="flex flex-col items-center justify-center mt-10">
-        <h1 className="text-5xl font-bold">
+        <h1 className="text-5xl font-bold text-center">
           Bulk Base64 Image Decoder!
         </h1>
         <p className="mt-4 text-lg text-center">

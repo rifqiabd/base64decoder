@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <Favicon url="/favicon.ico" />
       <title>{titleName}</title>
-      <Navbar toolName="Base64 Image Decoder" />
+      <Navbar toolName="Base64 Decoder" />
       <main className="p-4">
         <div className="max-w-5xl mx-auto">
           <Textarea
