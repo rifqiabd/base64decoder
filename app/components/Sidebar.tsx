@@ -16,8 +16,7 @@ import {
 
 const menuItems = [
   { icon: Home, name: "Home", href: "/" },
-  { icon: Image, name: "Base64 Decoder", href: "/base64-decoder" },
-  { icon: FileText, name: "Other Tool", href: "/other-tool" },
+  { icon: Image, name: "Base64 Image Decoder", href: "/base64-decoder" },
 ]
 
 export function AppSidebar() {
@@ -34,7 +33,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarMenu>
           {menuItems.map((item) => (
-            <SidebarMenuItem key={item.name}>
+            <SidebarMenuItem key={item.name} className="mb-2 pb-2 pt-2 ">
               <SidebarMenuButton asChild className={cn(pathname === item.href && "bg-muted")}>
                 <Link href={item.href} >
                   <item.icon className="mr-2 ml-4 h-6 w-6" />

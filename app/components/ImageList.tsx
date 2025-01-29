@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { ArrowBigDownDash, FileArchive, Trash2 } from "lucide-react";
+import { ArrowBigDownDash, FileArchive, RotateCcw, Trash2 } from "lucide-react";
 
 interface ImageListProps {
   images: string[];
@@ -73,16 +73,15 @@ export default function ImageList({
           disabled={selectedImages.size === 0}
           className="bg-red-500 hover:bg-red-600 text-white"
         >
-          <Trash2 /> ({selectedImages.size})
+          <Trash2 /> Delete ({selectedImages.size})
         </Button>
 
         <Button
           variant="destructive"
           onClick={onClearAll}
           disabled={images.length === 0}
-          className="bg-gray-500 hover:bg-gray-600 text-white"
         >
-          Clear All
+          <RotateCcw /> Star Over
         </Button>
 
         <Button
