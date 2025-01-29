@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 
-const menuItems = [
+export const menuItems = [
   { icon: Home, name: "Home", href: "/" },
   { icon: Image, name: "Base64 Image Decoder", href: "/base64-decoder" },
   { icon: FileText, name: "Help", href: "/help" },

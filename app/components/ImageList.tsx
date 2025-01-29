@@ -92,7 +92,7 @@ export default function ImageList({
         </Button>
 
         <Button onClick={downloadAllImages} disabled={images.length === 0}>
-          <FileArchive /> Zip ({selectedImages.size})
+          <FileArchive /> Zip all ({images.length})
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
