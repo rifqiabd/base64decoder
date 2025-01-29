@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Home, Image, FileText } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, Image, FileText } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -12,16 +12,16 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const menuItems = [
   { icon: Home, name: "Home", href: "/" },
   { icon: Image, name: "Base64 Image Decoder", href: "/base64-decoder" },
   { icon: FileText, name: "Help", href: "/help" },
-]
+];
 
 export function AppSidebar() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <Sidebar>
@@ -34,8 +34,11 @@ export function AppSidebar() {
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.name} className="mb-2 pb-2 pt-2 ">
-              <SidebarMenuButton asChild className={cn(pathname === item.href && "bg-muted")}>
-                <Link href={item.href} >
+              <SidebarMenuButton
+                asChild
+                className={cn(pathname === item.href && "bg-muted")}
+              >
+                <Link href={item.href}>
                   <item.icon className="mr-2 ml-4 h-6 w-6" />
                   <span>{item.name}</span>
                 </Link>
@@ -45,6 +48,5 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
-
