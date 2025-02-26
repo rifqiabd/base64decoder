@@ -1,7 +1,17 @@
 # Base64 Image Decoder
 
+A web-based tool for decoding and processing Base64-encoded images from various sources, including fetch statements.
+
+## Features
+🖼️ Decode Base64 images from various formats  
+🔍 Automatically extract Base64 data from fetch statements  
+📦 Batch process multiple images at once  
+📄 Generate PDF documents from decoded images  
+💾 Download individual images or create ZIP archives  
+🔧 Server-side image processing for reliability  
+
 ## Description
-Base64 Image Decoder is a simple tool to decode Base64 encoded images. It is useful for decoding image data that has been encoded to ensure safe transmission over text-based protocols.
+Base64 Image Decoder is a web application built with Next.js that allows you to decode Base64-encoded images. It supports extracting Base64 data from multiple sources, including raw Base64 strings, data URLs, and even fetch API statements. This is particularly useful for developers who need to extract embedded images from code or API responses.
 
 ## Installation
 To install the Base64 Image Decoder, clone the repository and install the necessary dependencies.
@@ -13,21 +23,35 @@ npm install
 ```
 
 ## Usage
-To use the Base64 Image Decoder, run the following command:
+Open the application in your browser (default: http://localhost:3000)
+Paste your Base64-encoded image data in the input field
+Click "Decode" to process the input
+View and manage your decoded images:
+- Select images using checkboxes
+- Download individual images
+- Download selected images as a ZIP archive
+- Generate a PDF containing all images
+- Delete unwanted images
 
-```bash
-node decode.js <base64string> <outputfile>
-```
+## Supported Input Formats
+- Raw Base64 strings: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA...
+- Data URLs: data:image/jpeg;base64,/9j/4AAQSkZJRgABA...
+- Fetch statements: 
+  ```javascript
+  fetch("data:image/jpeg;base64,/9j/4AAQSkZJRgABA...", {
+    "method": "GET"
+  });
+  ```
 
-Replace `<base64string>` with the Base64 encoded string of the image you want to decode and `<outputfile>` with the path where you want to save the decoded image.
-
-Example:
-
-```bash
-node decode.js iVBORw0KGgoAAAANSUhEUgAAAAUA... output.png
-```
-
-This will save the decoded image as `output.png`.
+## Tech Stack
+- Next.js 14
+- React
+- TypeScript
+- Tailwind CSS
+- pdf-lib (server-side PDF generation)
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any changes or improvements.
