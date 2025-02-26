@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Navbar } from "../components/Navbar";
 import Favicon from "react-favicon";
 
@@ -19,7 +18,7 @@ export default function Help() {
             then select inspect tools or use the F12 shortcut.
           </li>
           <li>Go to the network tab, then refresh with Ctrl+R.</li>
-          <li>Filter the network by the format "data:image/jpeg".</li>
+          <li>Filter the network by the format &quot;data:image/jpeg&quot;.</li>
           <li>
             Right-click on one of the data entries, and copy all fetch (node.js).
           </li>

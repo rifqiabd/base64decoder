@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { ArrowBigDownDash, FileArchive, RotateCcw, Trash2 } from "lucide-react";
+import { ArrowBigDownDash, FileArchive, RotateCcw, Trash2, FileText, Loader2 } from "lucide-react";
 
 interface ImageListProps {
   images: string[];
@@ -16,6 +16,7 @@ export default function ImageList({
   onClearAll,
 }: ImageListProps) {
   const [selectedImages, setSelectedImages] = useState<Set<number>>(new Set());
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
   const toggleImageSelection = (index: number) => {
     const newSelection = new Set(selectedImages);
@@ -65,6 +66,51 @@ export default function ImageList({
     saveAs(content, "all_images.zip");
   };
 
+  const downloadAllImagesAsPdf = async () => {
+    try {
+      setIsGeneratingPdf(true);
+      console.log("Sending request to server to generate PDF...");
+      
+      const response = await fetch("/api/decode", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          images: images
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log("Received PDF from server");
+      
+      if (!data.pdf) {
+        throw new Error("No PDF data received from server");
+      }
+      
+      // Convert base64 to blob
+      const binary = atob(data.pdf);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      
+      // Download the PDF
+      saveAs(blob, "all_images.pdf");
+      console.log("PDF download initiated");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
@@ -93,6 +139,21 @@ export default function ImageList({
 
         <Button onClick={downloadAllImages} disabled={images.length === 0}>
           <FileArchive /> Zip all ({images.length})
+        </Button>
+
+        <Button 
+          onClick={downloadAllImagesAsPdf} 
+          disabled={images.length === 0 || isGeneratingPdf}
+        >
+          {isGeneratingPdf ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...
+            </>
+          ) : (
+            <>
+              <FileText /> PDF all ({images.length})
+            </>
+          )}
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
